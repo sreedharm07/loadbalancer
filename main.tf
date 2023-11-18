@@ -3,7 +3,7 @@ resource "aws_lb" "test" {
   internal           = var.internal
   load_balancer_type = var.lb_type
   security_groups    = [aws_security_group.allow_tls.id]
-  subnets            = var.internal ?  var.app_subnet_ids : default_subnet_ids
+  subnets            = [var.subnets]
   tags = var.tags
 }
 
