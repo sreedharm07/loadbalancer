@@ -9,16 +9,16 @@ resource "aws_lb" "test" {
 
 
 resource "aws_security_group" "allow_tls" {
-  name        = var.internal ? "${var.env}-private-alb-sg" :"${var.env}-public-sg"
-  description = var.internal ? "${var.env}-private-alb-sg" :"${var.env}-public-sg"
-  vpc_id      = var.vpc_id
+  name        = var.internal ? "${var.env}-private-alb-sg" : "${var.env}-public-sg"
+  description = var.internal ? "${var.env}-private-alb-sg" : "${var.env}-public-sg"
+  vpc_id      = var.internal ?  var.app_subnet_ids : default_subnet_ids
 
   ingress {
-    description      = "app"
-    from_port        = var.port
-    to_port          = var.port
-    protocol         = "tcp"
-    cidr_blocks      = var.cidr_sg
+    description = "app"
+    from_port   = var.port
+    to_port     = var.port
+    protocol    = "tcp"
+    cidr_blocks = var.cidr_sg
   }
 
   egress {
